@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+The console wich controls the entire C.R.U.D process
+"""
 import cmd
 
 
