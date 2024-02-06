@@ -7,7 +7,8 @@ This is a project inspired by the [AirBnb official web application](https://www.
 In this project, we would use the following tools for building:
 1. Python => The console(our command interpreter for C.R.U.D)
 2. JSON => For storing users data
---------------- COMING SOON -----------------------
+
+### --------------- COMING SOON -----------------------
 3. MySQL
 4. JavaScript
 5. Flask
@@ -24,7 +25,8 @@ It is the backend in which every other framework or language meant for functioni
 To start the command intepreter follow this easy steps:
 1. clone this repo
 2. On your terminal, run the `./console.py`
-how to use it
+
+## How to use it
 To use follow these simple steps:
 1. `./console.py`
 2. `help`
