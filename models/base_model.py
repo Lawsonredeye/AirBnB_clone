@@ -9,10 +9,21 @@ from datetime import datetime
 
 
 class BaseModel:
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+        if kwargs is not None:
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    if key == "created_at" or key == "updated_at":
+                        obj_str = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                        setattr(self, key, obj_str)
+                    else:
+                        setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
 
     def save(self):
         self.updated_at = datetime.now()
@@ -25,4 +36,4 @@ class BaseModel:
         return dict_copy
 
     def __str__(self):
-        return (f"[BaseModel] ({self.id}) {self.__dict__}")
+        return (f"[{__class__.__name__}] ({self.id}) {self.__dict__}")
