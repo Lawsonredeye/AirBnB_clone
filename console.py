@@ -5,7 +5,7 @@ The console wich controls the entire C.R.U.D process
 import cmd
 
 
-class Console(cmd.Cmd):
+class HBNBCommand(cmd.Cmd):
     """
     The console which would be controlling the backend of the project.
     """
@@ -14,34 +14,21 @@ class Console(cmd.Cmd):
     def do_EOF(self, line):
         """
         specifies the end of file and terminates
-        the program by inputting CTRL + D
+        the program by pressing <CTRL + D>
         """
         return True
-
+    
     def postloop(self):
-        """
-        Enters a new-line automatically if True is encountered
-        """
-        print("")
+        print()
 
-    def do_greet(self, name):
+    def do_quit(self, line):
+        """Terminates the console and exits with a new line
+        <quit>
         """
-        Welcomes the Dev into the console, if name
-        is inputted it welcomes the Dev. with it's name
-
-        Args:
-            greet <name>
-            greet
-        """
-        if name:
-            print(f"hello, {name}")
-        else:
-            print("Hi")
-
+        return True
+    
+    def help_quit(self):
+        print("Terminates the console and exit")
 
 if __name__ == "__main__":
-    import sys
-    if len(sys.argv) > 1:
-        Console().onecmd(" ".join(sys.argv[1:]))
-    else:
-        Console().cmdloop()
+    HBNBCommand().cmdloop()
