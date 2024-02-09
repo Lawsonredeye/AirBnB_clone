@@ -6,6 +6,7 @@ class for inheriting sub-classes
 
 import uuid
 from datetime import datetime
+from . import storage
 
 
 class BaseModel:
@@ -22,11 +23,11 @@ class BaseModel:
                     else:
                         setattr(self, key, value)
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
+            storage.new(self)
 
     def save(self):
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         dict_copy = self.__dict__.copy()
