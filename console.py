@@ -21,6 +21,13 @@ class HBNBCommand(cmd.Cmd):
     def postloop(self):
         print()
 
+    def emptyline(self):
+        """
+        handles empty line input when '\n' is passed
+        as an argument in the console
+        """
+        pass
+
     def do_quit(self, line):
         """Terminates the console and exits with a new line
         <quit>
