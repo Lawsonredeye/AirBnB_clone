@@ -17,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
         the program by pressing <CTRL + D>
         """
         return True
-    
+
     def postloop(self):
         print()
 
@@ -33,9 +33,10 @@ class HBNBCommand(cmd.Cmd):
         <quit>
         """
         return True
-    
+
     def help_quit(self):
         print("Terminates the console and exit")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
