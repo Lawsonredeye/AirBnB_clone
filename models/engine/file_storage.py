@@ -35,6 +35,7 @@ class FileStorage:
         """
         key = obj.__class__.__name__ + "." + str(obj.id)
         self.__objects[key] = obj
+        return self.__objects
 
     def save(self):
         """
@@ -42,8 +43,10 @@ class FileStorage:
         dumps into a file which it can be called from when needed.
         Creates a file if it doesnt exist
         """
-        with open("file.json", "w+", encoding="utf-8") as f:
-            json.dump(self.__file_path, f)
+        from models.base_model import BaseModel
+        new_objects = {key: value.to_dict() for key, value in self.__objects.items()}
+        with open(f"{self.__file_path}", "a", encoding="utf-8") as f:
+            json.dump(new_objects, f)
 
     def reload(self):
         """
