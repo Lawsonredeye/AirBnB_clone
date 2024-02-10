@@ -5,6 +5,7 @@ airbnb web application which can be called at
 any time using json
 """
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -33,20 +34,25 @@ class FileStorage:
         Args:
             obj: value to be added to the __object attribute
         """
-        key = obj.__class__.__name__ + "." + str(obj.id)
+        # key = "{}.{}".format(type(obj).__name__, obj.id)
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.__objects[key] = obj
-        return self.__objects
 
     def save(self):
         """
         Saves all instances created into a json format and
         dumps into a file which it can be called from when needed.
         Creates a file if it doesnt exist
+
+        new dictionary was created which would store the __objects
+        values and then be passed onto the dump for a json representation
         """
-        from models.base_model import BaseModel
-        new_objects = {key: value.to_dict() for key, value in self.__objects.items()}
-        with open(f"{self.__file_path}", "a", encoding="utf-8") as f:
-            json.dump(new_objects, f)
+        # from ..base_model import BaseModel
+        # from models.base_model import BaseModel
+
+        new = {key: value.to_dict() for key, value in self.__objects.items()}
+        with open(self.__file_path, "w", encoding="utf-8") as f:
+            json.dump(new, f)
 
     def reload(self):
         """
@@ -56,6 +62,10 @@ class FileStorage:
         if self.__file_path is not None:
             try:
                 with open(self.__file_path, "r", encoding="utf-8") as f:
-                    self.__objects = json.load(f)
+                    data_dict = json.load(f)
+                    for key, value in data_dict.items():
+                        class_name, instance_id = key.split('.')
+                        new_dict = globals()[class_name](**value)
+                        self.__objects[key] = new_dict
             except FileNotFoundError:
                 pass
