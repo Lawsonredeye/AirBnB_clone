@@ -17,18 +17,26 @@ class HBNBCommand(cmd.Cmd):
         the program by pressing <CTRL + D>
         """
         return True
-    
+
     def postloop(self):
         print()
+
+    def emptyline(self):
+        """
+        handles empty line input when '\n' is passed
+        as an argument in the console
+        """
+        pass
 
     def do_quit(self, line):
         """Terminates the console and exits with a new line
         <quit>
         """
         return True
-    
+
     def help_quit(self):
         print("Terminates the console and exit")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

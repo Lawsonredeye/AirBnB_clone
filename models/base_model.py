@@ -4,14 +4,14 @@ Module for parent class which would act as the base
 class for inheriting sub-classes
 """
 
-import uuid
+from uuid import uuid4
 from datetime import datetime
-from . import storage
 
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
-        self.id = str(uuid.uuid4())
+        # used uuid4 as it has much better security
+        self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         if kwargs is not None:
@@ -23,10 +23,13 @@ class BaseModel:
                     else:
                         setattr(self, key, value)
         else:
+            from models import storage
             storage.new(self)
 
     def save(self):
+        from models import storage
         self.updated_at = datetime.now()
+        storage.new(self)
         storage.save()
 
     def to_dict(self):
