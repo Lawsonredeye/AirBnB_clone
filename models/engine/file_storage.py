@@ -7,7 +7,6 @@ any time using json
 import json
 from models.base_model import BaseModel
 
-
 class FileStorage:
     """
     class storage to store all instances that would be created
@@ -43,16 +42,11 @@ class FileStorage:
         Saves all instances created into a json format and
         dumps into a file which it can be called from when needed.
         Creates a file if it doesnt exist
-
-        new dictionary was created which would store the __objects
-        values and then be passed onto the dump for a json representation
         """
         # from ..base_model import BaseModel
-        # from models.base_model import BaseModel
-
-        new = {key: value.to_dict() for key, value in self.__objects.items()}
-        with open(self.__file_path, "w", encoding="utf-8") as f:
-            json.dump(new, f)
+        new_objects = {key: value.to_dict() for key, value in self.__objects.items()}
+        with open(f"{self.__file_path}", "w", encoding="utf-8") as f:
+            json.dump(new_objects, f)
 
     def reload(self):
         """

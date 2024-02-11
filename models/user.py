@@ -6,11 +6,12 @@ the BaseModel as its parent class
 from base_model import BaseModel
 
 
-class Review(BaseModel):
+class User(BaseModel):
     """
     Subclass which inherits from the BaseModels class
     sharing its properties and methods
     """
-    place_id = ""
-    user_id = ""
-    text = ""
+    email = ""
+    password = ""
+    first_name = ""
+    last_name = ""
