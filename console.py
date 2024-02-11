@@ -62,11 +62,17 @@ class HBNBCommand(cmd.Cmd):
             print(new_model.id)
 
     def do_show(self, line_name, line_id):
+        if not line_name:
+            print("** class name missing **")
+        if line_name != "BaseModel":
+            print("** class doesn't exist **")
         new_vars = storage.all()
-        for key, values in new_vars.items():
+        for key, values in new_vars.keys():
             class_name, instance_id = key.split('.')
+            # instance_id = str(instance_id)
             if class_name == line_name and instance_id == line_id:
-                print(new_vars[class_name][instance_id])
+                print(new_vars[class_name](instance_id))
+            print(key)
 
     def do_delete(self, line_name, line_id):
         if not line_name:
