@@ -143,7 +143,40 @@ class HBNBCommand(cmd.Cmd):
             print(empty_list)
 
     def do_update(self, line):
-        pass
+        """
+        Updates Already existing data that is been stored in the JSON file
+        USAGE:
+            update <CLASS NAME> <CLASS ID> <ATTRIBUTE NAME> <ATTRIBUTE VALUE>
+        """
+        # split line to get all the arguments passed on the intepreter
+        args = line.split()
+        if not args:
+            print("** class name missing **")
+            return
+        if args[0] != "BaseModel":
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+        if len(args) < 4:
+            print("** value missing **")
+            return
+        key = f"{args[0]}.{args[1]}"
+        new_key = args[2]
+        new_value = args[3]
+        new_dict = storage.all()
+        if key in new_dict:
+            temp_dict = new_dict[key].to_dict()
+            temp_dict[new_key] = str(new_value)
+            # print("Before save:", new_dict[key].to_dict())
+            storage.save()
+            # print("After save:", new_dict[key].to_dict())
+        else:
+            print("** no instance found **")
 
 
 if __name__ == "__main__":
