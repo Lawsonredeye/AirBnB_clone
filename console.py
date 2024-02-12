@@ -51,6 +51,8 @@ class HBNBCommand(cmd.Cmd):
         """
         Creates new user for BaseModel and then prints the ID of the
         new instances
+
+        Usage: create <CLASS NAME> <CLASS ID>
         """
         if not line:
             print("** class name missing **")
@@ -61,29 +63,69 @@ class HBNBCommand(cmd.Cmd):
             new_model.save()
             print(new_model.id)
 
-    def do_show(self, line_name, line_id=""):
-        if not line_name:
-            print("** class name missing **")
-        elif line_name != "BaseModel":
-            print("** class doesn't exist **")
-        if not line_id:
-            print("** instance id missing **")
-        else:
-            new_vars = storage.all()
-            for key in new_vars.keys():
-                class_name, instance_id = key.split('.')
-                if instance_id == line_id:
-                    print(new_vars[line_id])
-                else:
-                    print("** no instance found **")
+    def do_show(self, line):
+        """
+        This command is used to show all the data that is involved
+        with the <Class name> and the <Class ID> number.
 
-    def do_delete(self, line_name, line_id):
-        if not line_name:
+        It takes in One parameter and then splits it, after splitting
+        it pass the first part to the <class_name> and the second as
+        the <class_id>
+
+        Then it checks if the <class name> is recognized by the console
+        if it is and also the <class id> is in the imported file then it
+        it prints it in a string representation.
+
+        Usage: show <CLASS NAME> <CLASS ID>
+        """
+        # split t
+        args = line.split()
+        if not args:
             print("** class name missing **")
-        elif line_name != "BaseModel":
+            return
+        class_name = args[0]
+        if class_name != "BaseModel":
             print("** class doesn't exist **")
-        elif not line_id:
+            return
+        if len(args) < 2:
             print("** instance id missing **")
+            return
+        instance_id = args[1]
+        key = f"{class_name}.{instance_id}"
+        new_dict = storage.all()
+        if key in new_dict.keys():
+            print(new_dict[key])
+        else:
+            print("** no instance found **")
+
+    def do_delete(self, line):
+        """
+        This command deletes the data that has been created
+        based on the <class name> and <class id>.
+
+        After deletion, when the deleted <class name> and <class id>
+        an error message is displayed on the interpreter.
+
+        Usage: delete <CLASS NAME> <CLASS ID>
+        """
+        args = line.split()
+        if not args:
+            print("** class name missing **")
+            return
+        class_name = args[0]
+        if class_name != "BaseModel":
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        instance_id = args[1]
+        key = f"{class_name}.{instance_id}"
+        new_dict = storage.all()
+        if key in new_dict.keys():
+            del new_dict[key]
+        else:
+            print("** no instance found **")
 
     def do_all(self, line_name):
         """
