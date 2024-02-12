@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
         Creates an emptyline when EOF is called
         but it affects the do_quit when the quit
         is called by creating an extra new-line
-        when it is called. 
+        when it is called.
         """
         print()
 
@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
         then append the value into an empty list
         """
         if line_name and line_name != "BaseModel":
-                print("** class doesn't exist **")
+            print("** class doesn't exist **")
         else:
             all_objs = storage.all()
             empty_list = []
@@ -142,8 +142,9 @@ class HBNBCommand(cmd.Cmd):
                 empty_list.append(str(obj_id))
             print(empty_list)
 
-    def do_update(self, line_name, line_id):
-            pass
+    def do_update(self, line):
+        pass
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
