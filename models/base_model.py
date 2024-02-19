@@ -54,7 +54,7 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Responsible for adding te class name as well as
+        Responsible for adding the class name as well as
         the created at and updated_at instance in the
         dictionary and then returning the copy of the
         dictonary.
