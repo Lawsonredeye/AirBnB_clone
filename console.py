@@ -98,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
 
-    def do_delete(self, line):
+    def do_destroy(self, line):
         """
         This command deletes the data that has been created
         based on the <class name> and <class id>.
@@ -106,7 +106,7 @@ class HBNBCommand(cmd.Cmd):
         After deletion, when the deleted <class name> and <class id>
         an error message is displayed on the interpreter.
 
-        Usage: delete <CLASS NAME> <CLASS ID>
+        Usage: destroy <CLASS NAME> <CLASS ID>
         """
         args = line.split()
         if not args:
@@ -124,6 +124,7 @@ class HBNBCommand(cmd.Cmd):
         new_dict = storage.all()
         if key in new_dict.keys():
             del new_dict[key]
+            storage.save()
         else:
             print("** no instance found **")
 
@@ -168,15 +169,30 @@ class HBNBCommand(cmd.Cmd):
         key = f"{args[0]}.{args[1]}"
         new_key = args[2]
         new_value = args[3]
+        # using the BaseModel class directly to store the new instance
+        # new_dict = BaseModel()
         new_dict = storage.all()
-        if key in new_dict:
-            temp_dict = new_dict[key].to_dict()
-            temp_dict[new_key] = str(new_value)
-            # print("Before save:", new_dict[key].to_dict())
-            storage.save()
-            # print("After save:", new_dict[key].to_dict())
-        else:
-            print("** no instance found **")
+        # print(storage.all())
+        for i in new_dict:
+            print(i)
+            if i == key:
+                print("-------------")
+                print(key)
+                print("-------------")
+                # setattr(new_dict, new_key, new_value)
+            #     storage.save()
+        # if key in new_dict.keys():
+        #     #
+        #     # temp_dict = new_dict[key].to_dict()
+        #     # new_dict[new_key] = str(new_value)
+        #     setattr(new_dict, new_key, new_value)
+        #     # print(temp_dict)
+        #     # new_dict = temp_dict.update()
+        #     storage.save()
+        #     # new_dict.save()
+        #     # print("After save:", new_dict[key].to_dict())
+        # else:
+        #     print("** no instance found **")
 
 
 if __name__ == "__main__":
